@@ -1,0 +1,68 @@
+# ----------------------
+# Python
+# ----------------------
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+*.egg-info/
+*.log
+
+# Diretórios
+data/compactados
+data/dicionarios
+data/raw
+
+# Checkpoints de notebooks
+.ipynb_checkpoints/
+
+# Ambientes virtuais
+.env/
+.venv/
+env/
+venv/
+venv_parser/
+
+# Arquivos de ambiente e configuração locais
+*.env
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+
+# Arquivos temporários de dados e trabalho
+data/tmp/
+data/**/~$*
+data/**/.DS_Store
+data/**/Thumbs.db
+data/raw
+
+# Arquivos exportados
+*.pdf
+*.docx
+*.xlsx
+*.parquet
+*.gz
+*.tar
+
+# Logs
+logs/
+*.log
+nohup.out
+
+# Cache de pacotes Python
+pip-wheel-metadata/
+__pypackages__/
+*.dist-info/
+
+# Cache geral
+.cache/
+*.cache
+*.tmp
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
