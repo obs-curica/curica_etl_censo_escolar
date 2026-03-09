@@ -22,7 +22,7 @@ data/raw
 .venv/
 env/
 venv/
-venv_parser/
+venv_etl_censo/
 
 # Arquivos de ambiente e configuração locais
 *.env
