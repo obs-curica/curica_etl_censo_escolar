@@ -39,8 +39,7 @@ SCHEMA_CURICA = [
     'IN_AGUA_FONTE_RIO',
     'IN_AGUA_INEXISTENTE',
     'IN_AGUA_CARRO_PIPA',
-    'IN_ENERGIA_REDE_PUBLICA',
-
+    
     # infra energia elétrica
     'IN_ENERGIA_REDE_PUBLICA',
     'IN_ENERGIA_GERADOR_FOSSIL',
@@ -188,7 +187,7 @@ SCHEMA_CURICA = [
     'QT_MAT_MED_IFA', # itinerário formativo aprofundamento
     'QT_MAT_MED_NM', # magistério
 
-    # matrículas ensino integral 
+    # matrículas tempo integral
     'QT_MAT_INF_INT',
     'QT_MAT_INF_CRE_INT',
     'QT_MAT_INF_PRE_INT',
@@ -196,7 +195,8 @@ SCHEMA_CURICA = [
     'QT_MAT_FUND_AI_INT',
     'QT_MAT_FUND_AF_INT',
     'QT_MAT_MED_INT',
-    
+    'QT_MAT_BAS_INT', # total, a partir de 2025
+   
     # matrículas educação especial
     'QT_MAT_ESP', 
     'QT_MAT_ESP_INF', # detalhamento a partir de 2025
@@ -208,6 +208,7 @@ SCHEMA_CURICA = [
     'QT_MAT_ESP_MED',
 
     # matrículas por turno, a partir de 2025
+    'QT_MAT_INF_CRE_D',
     'QT_MAT_INF_CRE_DM', # matutino
     'QT_MAT_INF_CRE_DV', # vespertino
     'QT_MAT_INF_CRE_N', # noturno
@@ -231,16 +232,6 @@ SCHEMA_CURICA = [
     'QT_MAT_MED_DM',
     'QT_MAT_MED_DV',
     'QT_MAT_MED_N',
-
-    # matrículas tempo integral
-    'QT_MAT_INF_INT',
-    'QT_MAT_INF_CRE_INT',
-    'QT_MAT_INF_PRE_INT',
-    'QT_MAT_FUND_INT',
-    'QT_MAT_FUND_AI_INT',
-    'QT_MAT_FUND_AF_INT',
-    'QT_MAT_MED_INT',
-    'QT_MAT_BAS_INT', # total, a partir de 2025
 
     # transporte escolar
     'QT_TRANSP_PUBLICO',
