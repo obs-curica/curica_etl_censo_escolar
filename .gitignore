@@ -13,6 +13,7 @@ __pycache__/
 data/compactados
 data/dicionarios
 data/raw
+data/interim
 
 # Checkpoints de notebooks
 .ipynb_checkpoints/
