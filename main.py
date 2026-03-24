@@ -1,5 +1,7 @@
-from pathlib import Path
+import time
 import pandas as pd
+from pathlib import Path
+from tqdm import tqdm
 
 from etl import carregar_microdados_antigos
 from etl import carregar_microdados_vigente
@@ -7,13 +9,12 @@ from etl import detectar_anos_formato_vigente
 
 from schema import SCHEMA_CURICA
 
+# inicializacao contador de tempo
+inicio_execucao = time.time()
+
 # toma como diretório pai o diretório do arquivo do notebook
 BASE_DIR = Path(__file__).resolve().parent
 RAW_CENSO_DIR = BASE_DIR / "data" / "raw"
-
-schema_colunas = SCHEMA_CURICA
-
-
 
 def executar_etl(raw_dir):
 
@@ -24,27 +25,33 @@ def executar_etl(raw_dir):
     # ----------------------
     # ANOS ANTIGOS
     # ----------------------
-    for arq in arquivos:
-        print(f"Processando {arq.name}")
+    tqdm.write("\nProcessando arquivos no formato antigo:")
 
-        df = carregar_microdados_antigos(arq, schema_colunas)
+    for arq in tqdm(arquivos, desc="Formato antigo"):
+        tqdm.write(f"Processando {arq.name}")
+
+        df = carregar_microdados_antigos(arq, SCHEMA_CURICA)
         dfs.append(df)
 
     # ----------------------
     # 2025+
     # ----------------------
-    print("\nProcessando microdados no formato vigente")
+    tqdm.write("\nProcessando microdados no formato vigente:")
 
-    anos = detectar_anos_formato_vigente(raw_dir)
+    anos = sorted(detectar_anos_formato_vigente(raw_dir))
 
-    for ano in anos:
-        df = carregar_microdados_vigente(raw_dir, ano, schema_colunas)
+    for ano in tqdm(anos, desc="Formato vigente"):
+        tqdm.write(f"Processando microdados do ano {ano}")
+        
+        df = carregar_microdados_vigente(raw_dir, ano, SCHEMA_CURICA)
         dfs.append(df)
 
     # ----------------------
     # CONCAT FINAL
     # ----------------------
     df_final = pd.concat(dfs, ignore_index=True)
+
+    del dfs
 
     return df_final
 
@@ -57,4 +64,10 @@ output_dir = BASE_DIR / "processed"
 output_dir.mkdir(exist_ok=True)
 
 df_censo.to_csv(output_dir / "df_censo.csv", sep=";", encoding="latin-1", index=False)
+print(f"\nDataframe salvo em {output_dir}")
+
+fim_execucao = time.time()
+tempo_execucao = fim_execucao - inicio_execucao
+print(f"\nTempo total de execução: {tempo_execucao:.2f} segundos")
+print("\nProcesso concluído com sucesso.")
 

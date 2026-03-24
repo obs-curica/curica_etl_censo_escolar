@@ -70,8 +70,6 @@ def detectar_anos_formato_vigente(raw_dir):
 
 def carregar_microdados_vigente(raw_dir, ano, schema_colunas):
 
-    print(f"Processando modelo vigente: {ano}")
-
     # ----------------------
     # ESCOLA (base)
     # ----------------------
