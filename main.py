@@ -6,15 +6,19 @@ from tqdm import tqdm
 from etl import carregar_microdados_antigos
 from etl import carregar_microdados_vigente
 from etl import detectar_anos_formato_vigente
+from etl import gerar_panorama
 
 from schema import SCHEMA_CURICA
+from schema import SCHEMAS_PANORAMAS
 
 # inicializacao contador de tempo
 inicio_execucao = time.time()
 
-# toma como diretório pai o diretório do arquivo do notebook
+# diretórios de saída
 BASE_DIR = Path(__file__).resolve().parent
 RAW_CENSO_DIR = BASE_DIR / "data" / "raw"
+OUTPUT_INTERIM_DIR = BASE_DIR / "data" / "interim"
+OUTPUT_PROCESSED_DIR = BASE_DIR / "data" / "processed"
 
 def executar_etl(raw_dir):
 
@@ -59,12 +63,23 @@ def executar_etl(raw_dir):
 # EXECUÇÃO
 df_censo = executar_etl(RAW_CENSO_DIR)
 
-# salvamento do arquivo
-output_dir = BASE_DIR / "processed"
-output_dir.mkdir(exist_ok=True)
+# salvamento do arquivo CSV
+df_censo.to_csv(OUTPUT_INTERIM_DIR / "df_censo.csv", sep=";", encoding="latin-1", index=False)
+print(f"\nDataframe intermediário salvo em {OUTPUT_INTERIM_DIR}")
 
-df_censo.to_csv(output_dir / "df_censo.csv", sep=";", encoding="latin-1", index=False)
-print(f"\nDataframe salvo em {output_dir}")
+# Criação dos dataframes dos panoramas
+dfs_panoramas = {}
+
+for nome, colunas in SCHEMAS_PANORAMAS.items():
+    dfs_panoramas[nome] = gerar_panorama(df_censo, colunas)
+
+for nome, df in dfs_panoramas.items():
+
+    caminho = OUTPUT_PROCESSED_DIR / f"df_{nome}.csv"
+
+    df.to_csv(caminho, sep=";", encoding="latin-1", index=False)
+
+    print(f"\n{nome} salvo em {caminho}")
 
 fim_execucao = time.time()
 tempo_execucao = fim_execucao - inicio_execucao

@@ -1,10 +1,6 @@
 
 import pandas as pd
 
-from schema import SCHEMA_CURICA
-
-
-
 def carregar_microdados_antigos(caminho_arquivo, schema_colunas):
     """
     Carrega os microdados do Censo Escolar no formato antigo (2024-),
@@ -166,10 +162,6 @@ def carregar_microdados_vigente(raw_dir, ano, schema_colunas):
     # ----------------------
     # PADRONIZAÇÃO DO SCHEMA
     # ----------------------
-    #for col in schema_colunas:
-    #    if col not in df_final.columns:
-    #        df_final[col] = pd.NA
-
     colunas_faltantes = [col for col in schema_colunas if col not in df_final.columns]
 
     df_faltantes = pd.DataFrame({col: pd.NA for col in colunas_faltantes}, index=df_final.index)
@@ -179,3 +171,10 @@ def carregar_microdados_vigente(raw_dir, ano, schema_colunas):
     df_final = df_final[schema_colunas].copy()
 
     return df_final
+
+
+def gerar_panorama(df, colunas):
+
+    colunas_validas = [col for col in colunas if col in df.columns]
+
+    return df[colunas_validas].copy()
