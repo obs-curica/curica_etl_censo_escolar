@@ -73,6 +73,9 @@ dfs_panoramas = {}
 for nome, colunas in SCHEMAS_PANORAMAS.items():
     dfs_panoramas[nome] = gerar_panorama(df_censo, colunas)
 
+# liberação de memória
+del df_censo
+
 for nome, df in dfs_panoramas.items():
 
     caminho = OUTPUT_PROCESSED_DIR / f"df_{nome}.csv"
@@ -80,6 +83,8 @@ for nome, df in dfs_panoramas.items():
     df.to_csv(caminho, sep=";", encoding="latin-1", index=False)
 
     print(f"\n{nome} salvo em {caminho}")
+
+del dfs_panoramas
 
 fim_execucao = time.time()
 tempo_execucao = fim_execucao - inicio_execucao
